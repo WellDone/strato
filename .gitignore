@@ -2,3 +2,6 @@ www/*.html
 node_modules
 www/bower_components
 data
+npm-debug.log
+*.sublime-project
+*.sublime-workspace
