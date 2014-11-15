@@ -1,3 +1,4 @@
 www/*.html
 node_modules
 www/bower_components
+data
