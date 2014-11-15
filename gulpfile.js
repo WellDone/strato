@@ -2,6 +2,14 @@ var gulp = require('gulp');
 var handlebars = require('gulp-compile-handlebars');
 var rename = require('gulp-rename');
 
+var watch = false;
+process.argv.forEach(function (val, index, array) {
+  if ( val == '-w' || val == '--watch' )
+  {
+    watch = true;
+  }
+});
+
 gulp.task('default', function () {
     var templateData = {},
     options = {
@@ -16,3 +24,8 @@ gulp.task('default', function () {
 		    }))
         .pipe(gulp.dest('./www'));
 });
+
+if ( watch )
+{
+    var watcher = gulp.watch('src/**/*.hbs', ['default']);
+}

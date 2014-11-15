@@ -1,19 +1,3 @@
-Morris.Donut({
-  element: 'dashboard-functionality-chart',
-  data: [{
-    label: "Non-functional",
-    value: 9
-  }, {
-    label: "Functioning Normally",
-    value: 16
-  }, {
-    label: "Status Unknown",
-    value: 1
-  }],
-  resize: true,
-  colors: ['#d9534f', '#5cb85c', '#f0ad4e']
-});
-
 Morris.Area({
 	element: 'dashboard-history-chart',
 	data: [
@@ -42,7 +26,7 @@ var map = L.map('dashboard-monitor-map', {
 
 var countryStyle = {
   'color': '#000',
-  'weight': 5,
+  'weight': 3,
   'opacity': 0.6
 };
 
@@ -50,12 +34,48 @@ L.geoJson(geo_countries, {
   style: countryStyle
 }).addTo(map);
 
-$.getJSON( "/monitors", function(monitors) {
-	var markers = new L.MarkerClusterGroup();
-	$.each( monitors, function( i, v ) {
-		var marker = L.marker(v.location);
-		marker.bindPopup("<b>" + v.name + "</b>");
-		markers.addLayer(marker);
+$.getJSON( "/api/monitors", function(monitors) {
+	$.getJSON( "/api/reports", function(reports) {
+
+		$.getJSON( "/api/alerts", function(alerts) {
+			var failed_count = _.reduce(monitors, function(r, val) {
+				return (val.status == 'failed')? r+1 : r;
+			}, 0);
+			var ok_count = _.reduce(monitors, function(r, val) {
+				return (val.status == 'ok')? r+1 : r;
+			}, 0);
+			var unknown_count = _.reduce(monitors, function(r, val) {
+				return (val.status == 'unknown')? r+1 : r;
+			}, 0);
+
+			$('#daily-report-count').text(''+reports.length);
+			$('#status-failed-count').text(''+failed_count);
+			$('#status-ok-count').text(''+ok_count);
+			$('#status-unknown-count').text(''+unknown_count);
+
+			Morris.Donut({
+			  element: 'dashboard-functionality-chart',
+			  data: [{
+			    label: "Non-functional",
+			    value: failed_count
+			  }, {
+			    label: "Functioning Normally",
+			    value: ok_count
+			  }, {
+			    label: "Status Unknown",
+			    value: unknown_count
+			  }],
+			  resize: true,
+			  colors: ['#d9534f', '#5cb85c', '#f0ad4e']
+			});
+
+			var markers = new L.MarkerClusterGroup();
+			$.each( monitors, function( i, v ) {
+				var marker = L.marker(v.location);
+				marker.bindPopup("<b>" + v.name + "</b>");
+				markers.addLayer(marker);
+			})
+			map.addLayer(markers);
+		})
 	})
-	map.addLayer(markers);
 } );

@@ -34,7 +34,7 @@
 {{> partials/commonjs}}
 
 <script type="text/javascript">
-    (function() {
+    $(function() {
         var query = window.location.search.slice(1).toLowerCase();
         if ( query.indexOf( "redir=" ) == -1 )
             return;
@@ -42,6 +42,6 @@
         if ( redir.indexOf( "&" ) != -1 )
             redir = redir.substr( 0, redir.indexOf("&") );
         $('#login-link').attr('href', redir);
-    })()
+    });
 </script>
 {{> partials/footer}}

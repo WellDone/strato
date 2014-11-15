@@ -1,4 +1,5 @@
 var http = require('http');
+var _ = require('lodash');
 
 var monitors = [
 	{name: 'Aidan Ulungi', location: [-8.09338,36.51612]},
@@ -7,12 +8,20 @@ var monitors = [
 	{name: 'Mwalima Njayaga', location: [-8.1166,36.66723]}
 ]
 
+var statusNames = [
+  'ok', 'failed', 'unknown'
+]
+monitors = _.map( monitors, function( v ) {
+  v['status'] = statusNames[Math.floor( Math.random() * 3 )];
+  return v;
+})
+
 function addMonitor(monitor) {
 	monitor = JSON.stringify( monitor );
 	var options = {
     hostname: 'localhost',
     port: 3000,
-    path: '/monitors',
+    path: '/api/monitors',
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': monitor.length

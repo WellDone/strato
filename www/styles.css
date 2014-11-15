@@ -35,3 +35,13 @@
 #dashboard-monitor-map {
 	height: 300px;
 }
+
+.sidebar-divider {
+	height: 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .sidebar-divider {
+  	display: none !important;
+  }
+}
