@@ -1,3 +1,21 @@
+html, body {
+	height: 100%;
+	max-width: 100%;
+}
+
+#wrapper {
+	margin-bottom:-2em;
+	height: auto !important;
+	height:100%;
+}
+.footer {
+	height: 2em;
+}
+span.footer {
+	padding-top: .5em;
+	padding-right:.5em;
+}
+
 .navbar {
   background-color: #21ace3;
   border-bottom: none;

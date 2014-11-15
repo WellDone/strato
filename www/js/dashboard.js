@@ -17,7 +17,7 @@ Morris.Area({
 var map = L.map('dashboard-monitor-map', {
 	scrollWheelZoom: false,
 	maxZoom: 13
-}).setView([-8.1, 36.6833], 5);
+}).setView([-8.1, 36.6833], 2);
 
 //  L.tileLayer('http://{s}.tiles.mapbox.com/v3/austinm.k7dlholc/{z}/{x}/{y}.png', {
 //    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
