@@ -13,20 +13,20 @@ $(function() {
   
   var tbl = $('#dataTables-example').dataTable( {
     columns: [
-      { data: 'name' },
-      { data: 'location' },
-      { data: 'gsmid' },
-      { data: 'timeSinceLastReport' },
+      { data: 'timestamp' },
+      { data: 'monitor' },
+      { data: 'battery_voltage' },
+      { data: 'gateway' },
       { data: 'status' }
     ],
     ajax: {
-      url: '/api/monitors',
+      url: '/api/reports',
       dataSrc: function( json ) {
         for ( var i in json ) {
-          json[i]['name'] = escapeHtml(json[i]['name'])||"";
-          json[i]['location'] = escapeHtml(json[i]['location'])||"";
-          json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
-          json[i]['timeSinceLastReport'] = escapeHtml(json[i]['timeSinceLastReport'])||"";
+          json[i]['timestamp'] = escapeHtml(json[i]['name'])||"";
+          json[i]['monitor'] = escapeHtml(json[i]['location'])||"";
+          json[i]['battery_voltage'] = escapeHtml(json[i]['gsmid'])||"";
+          json[i]['gateway'] = escapeHtml(json[i]['timeSinceLastReport'])||"";
 
           var statusLabel = "";
           if ( json[i]['status'] == 'ok' )
@@ -37,7 +37,6 @@ $(function() {
             statusLabel = "label-warning";
           json[i]['status'] = "<span class='label " + statusLabel + "'>" + (escapeHtml(json[i]['status'])||"") + "</span>";
         }
-        console.log(json);
         return json;
       }
     }

@@ -36,6 +36,10 @@
 	height: 300px;
 }
 
+#page-wrapper {
+	border-bottom: solid 1px #e7e7e7;
+}
+
 .sidebar-divider {
 	height: 20px;
 }
