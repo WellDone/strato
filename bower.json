@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "chartist": "~0.3.1"
+    "chartist": "~0.3.1",
+    "leaflet.markercluster": "~0.4.0"
   }
 }

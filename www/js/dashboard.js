@@ -32,7 +32,7 @@ Morris.Area({
 
 var map = L.map('dashboard-monitor-map', {
 	scrollWheelZoom: false,
-	doubleClickZoom: true
+	maxZoom: 13
 }).setView([-8.1, 36.6833], 5);
 
 //  L.tileLayer('http://{s}.tiles.mapbox.com/v3/austinm.k7dlholc/{z}/{x}/{y}.png', {
@@ -50,13 +50,12 @@ L.geoJson(geo_countries, {
   style: countryStyle
 }).addTo(map);
 
-var monitors = [
-	{name: 'Aidan Ulungi', location: [-8.09338,36.51612]},
-	{name: 'Musfa Madanga', location: [-8.13364,36.66714]},
-	{name: 'Chingilile', location: [-8.09336,36.69564]},
-	{name: 'Mwalima Njayaga', location: [-8.1166,36.66723]}
-]
-$.each( monitors, function( i, v ) {
-	var marker = L.marker(v.location).addTo(map);
-	marker.bindPopup("<b>" + v.name + "</b>");
-})
+$.getJSON( "/monitors", function(monitors) {
+	var markers = new L.MarkerClusterGroup();
+	$.each( monitors, function( i, v ) {
+		var marker = L.marker(v.location);
+		marker.bindPopup("<b>" + v.name + "</b>");
+		markers.addLayer(marker);
+	})
+	map.addLayer(markers);
+} );
