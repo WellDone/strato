@@ -1,0 +1,23 @@
+{
+  "name": "strato-portal",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.2",
+    "nedb": "^0.11.1",
+    "body-parser": "^1.9.2",
+    "compression": "^1.2.0"
+  },
+  "devDependencies": {
+    "handlebars": "^2.0.0",
+    "gulp-compile-handlebars": "^0.3.3",
+    "gulp": "^3.8.10",
+    "gulp-rename": "^1.2.0"
+  }
+}

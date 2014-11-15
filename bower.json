@@ -1,0 +1,20 @@
+{
+  "name": "strato-portal",
+  "version": "0.1.0",
+  "authors": [
+    "Austin McGee <austinwm@gmail.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "www/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist": "~0.3.1"
+  }
+}

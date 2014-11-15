@@ -1,0 +1,37 @@
+.navbar {
+  background-color: #21ace3;
+  border-bottom: none;
+  margin-bottom: 0px;
+}
+.navbar-header {
+	width:100%;
+}
+
+.navbar-brand {
+	padding:10px 10px;
+}
+
+.navbar-top-links {
+	float: right !important;
+}
+.navbar-top-links li a.dropdown-toggle {
+	color: #000000 !important;
+}
+
+.navbar-toggle {
+	border-color: #000000 !important;
+}
+.navbar-toggle:hover, .navbar-toggle:hover {
+	background-color: #000000 !important;
+}
+.navbar-toggle .icon-bar {
+	background-color: #FFFFFF !important;
+}
+
+.sticky {
+	z-index: 99999;
+}
+
+#dashboard-monitor-map {
+	height: 300px;
+}

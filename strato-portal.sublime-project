@@ -1,0 +1,22 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+			"folder_exclude_patterns":
+			[
+				".vagrant",
+				"node_modules",
+				"www/bower_components",
+				"data"
+			],
+			"file_exclude_patterns":
+			[
+				"www/*.html",
+				"*.sublime-project",
+				"*.sublime-workspace"
+			]
+		}
+	]
+}
