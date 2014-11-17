@@ -1,17 +1,22 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-map-marker fa-fw"></i> Monitor Map
-        <div class="pull-right">
+        <div class="pull-right hidden">
         		Showing: 
-            <div class="btn-group hidden">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+            <div class="btn-group">
+                <button id="map-current-filter" type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                     All Monitors
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="#">Monitors Reporting Functional</a>
+                <ul id='map-filter-list' class="dropdown-menu pull-right" role="menu">
+                    <li><a id="map-filter-all" href="#" class="hidden">All Monitors</a>
                     </li>
-                    <li><a href="#">Monitors Reporting Non-Functional</a>
+                    <li class="divider"></li>
+                    <li><a id="map-filter-functional" href="#">Monitors Reporting Functional</a>
+                    </li>
+                    <li><a id="map-filter-broken" href="#">Monitors Reporting Non-Functional</a>
+                    </li>
+                    <li><a id="map-filter-unknown" href="#">Monitors with Status Unknown</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="#">Monitors with Low Battery</a>

@@ -15,25 +15,27 @@ $(function() {
     columns: [
       { data: 'timestamp' },
       { data: 'monitor' },
-      { data: 'battery_voltage' },
+      { data: 'batteryVoltage' },
       { data: 'gateway' },
+      { data: 'gsmid' },
       { data: 'status' }
     ],
     ajax: {
       url: '/api/reports',
       dataSrc: function( json ) {
         for ( var i in json ) {
-          json[i]['timestamp'] = escapeHtml(json[i]['name'])||"";
-          json[i]['monitor'] = escapeHtml(json[i]['location'])||"";
-          json[i]['battery_voltage'] = escapeHtml(json[i]['gsmid'])||"";
-          json[i]['gateway'] = escapeHtml(json[i]['timeSinceLastReport'])||"";
+          json[i]['timestamp'] = escapeHtml(json[i]['timestamp'])||"";
+          json[i]['monitor'] = escapeHtml(json[i]['monitor'])||"";
+          json[i]['batteryVoltage'] = escapeHtml(json[i]['batteryVoltage'])||"";
+          json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
+          json[i]['gateway'] = escapeHtml(json[i]['gateway'])||"";
 
           var statusLabel = "";
           if ( json[i]['status'] == 'ok' )
             statusLabel = "label-success";
           else if ( json[i]['status'] == 'failed' )
             statusLabel = "label-danger";
-          else if ( json[i]['status'] == 'unknown' )
+          else
             statusLabel = "label-warning";
           json[i]['status'] = "<span class='label " + statusLabel + "'>" + (escapeHtml(json[i]['status'])||"") + "</span>";
         }

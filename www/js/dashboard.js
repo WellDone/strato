@@ -33,11 +33,27 @@ var countryStyle = {
 L.geoJson(geo_countries, {
   style: countryStyle
 }).addTo(map);
+var markers = new L.MarkerClusterGroup();
+
+var data = {};
+
+var addMarkersToMap = function( filter ) {
+	$.each( data.monitors, function( i, v ) {
+		if ( filter && v.status != filter )
+			return;
+		var marker = L.marker(v.location);
+		marker.bindPopup("<b>" + v.name + "</b>");
+		markers.addLayer(marker);
+	})
+	map.addLayer(markers);
+}
 
 $.getJSON( "/api/monitors", function(monitors) {
+	data.monitors = monitors;
 	$.getJSON( "/api/reports", function(reports) {
-
+		data.reports = reports;
 		$.getJSON( "/api/alerts", function(alerts) {
+			data.alerts = alerts;
 			var failed_count = _.reduce(monitors, function(r, val) {
 				return (val.status == 'failed')? r+1 : r;
 			}, 0);
@@ -69,13 +85,13 @@ $.getJSON( "/api/monitors", function(monitors) {
 			  colors: ['#d9534f', '#5cb85c', '#f0ad4e']
 			});
 
-			var markers = new L.MarkerClusterGroup();
-			$.each( monitors, function( i, v ) {
-				var marker = L.marker(v.location);
-				marker.bindPopup("<b>" + v.name + "</b>");
-				markers.addLayer(marker);
-			})
-			map.addLayer(markers);
-		})
+			addMarkersToMap();
+		});
 	})
 } );
+
+$('#map-filter-functional').click(function(e) {
+	$('#map-filter-functional').addClass('hidden');
+	$('#map-current-filter').text($('#map-filter-functional').text());
+	e.preventDefault();
+})
