@@ -1,2 +1,5 @@
 var server = require('./lib/server');
-server.listen( 3000 );
+
+var port = process.env['PORT'] || 3000;
+console.log("Starting server on port %d...", port);
+server.listen( port );
