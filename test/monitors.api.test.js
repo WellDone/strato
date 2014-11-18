@@ -14,7 +14,7 @@ describe('REST api server, monitors resource:', function(){
       })
       .end(function(e,res){
       	expect(e).to.eql(null);
-      	console.log(res.body)
+      	expect(res.status).to.eql(201);
         expect(res.body).to.be.an('object');
         expect(res.body).not.to.be.an('array');
         expect(res.body._id.length).to.eql(16);
@@ -26,6 +26,7 @@ describe('REST api server, monitors resource:', function(){
   	superagent.get('http://localhost:3000/api/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);
+  			expect(res.status).to.eql(200);
   			expect(res.body).to.be.an('object');
         expect(res.body).not.to.be.an('array');
   			expect(res.body._id).to.eql(id);
@@ -38,6 +39,15 @@ describe('REST api server, monitors resource:', function(){
   	superagent.del('http://localhost:3000/api/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);
+  			expect(res.status).to.eql(200);
+  			done();
+  		})
+  })
+  it('fetch the non-existent deleted monitor', function(done){
+  	superagent.get('http://localhost:3000/api/monitors/' + id)
+  		.end(function(e,res){
+  			expect(e).to.eql(null);
+  			expect(res.status).to.eql(404);
   			done();
   		})
   })
