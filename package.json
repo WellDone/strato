@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "node ./node_modules/gulp/bin/gulp.js",
     "start": "node ./node_modules/supervisor/lib/cli-wrapper.js -w index.js,lib index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "",
   "license": "ISC",
@@ -15,13 +15,16 @@
     "nedb": "^0.11.1",
     "body-parser": "^1.9.2",
     "compression": "^1.2.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "superagent": "^0.21.0"
   },
   "devDependencies": {
     "handlebars": "^2.0.0",
     "gulp-compile-handlebars": "^0.3.3",
     "gulp": "^3.8.10",
     "gulp-rename": "^1.2.0",
-    "supervisor": "^0.6.0"
+    "supervisor": "^0.6.0",
+    "mocha": "^2.0.1",
+    "expect.js": "^0.3.1"
   }
 }
