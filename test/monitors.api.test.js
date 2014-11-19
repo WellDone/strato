@@ -99,6 +99,19 @@ describe('REST api v1.0, monitors resource:', function(){
       })
   })
 
+  it('try to post a report and overwrite monitors_id (should fail)', function(done) {
+    superagent.post('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+      .send({
+        value: 'BOGUS',
+        monitors_id: 'HAXORS'
+      })
+      .end(function(e,res){
+        expect(e).to.eql(null);
+        expect(res.status).to.eql(400);
+        done()
+      })
+  })
+
   it('delete the reports', function(done) {
   	_.forEach( reports, function( report_id ) {
 	  	superagent.del('http://localhost:3000/api/v1/monitors/' + id + '/reports/'+ report_id)
@@ -132,7 +145,7 @@ describe('REST api v1.0, monitors resource:', function(){
   		})
   })
 
-  it('fetch the non-existent deleted monitor', function(done){
+  it('fetch the non-existent deleted monitor (should fail)', function(done){
   	superagent.get('http://localhost:3000/api/v1/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);

@@ -16,7 +16,8 @@
     "body-parser": "^1.9.2",
     "compression": "^1.2.0",
     "lodash": "^2.4.1",
-    "superagent": "^0.21.0"
+    "superagent": "^0.21.0",
+    "remjs": "^0.1.1"
   },
   "devDependencies": {
     "handlebars": "^2.0.0",
