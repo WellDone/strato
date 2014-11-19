@@ -20,7 +20,7 @@ $(function() {
       { data: 'status' }
     ],
     ajax: {
-      url: '/api/monitors',
+      url: '/api/v1/monitors',
       dataSrc: function( json ) {
         for ( var i in json ) {
           json[i]['name'] = escapeHtml(json[i]['name'])||"";

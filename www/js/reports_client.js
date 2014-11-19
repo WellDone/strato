@@ -21,7 +21,7 @@ $(function() {
       { data: 'status' }
     ],
     ajax: {
-      url: '/api/reports',
+      url: '/api/v1/reports',
       dataSrc: function( json ) {
         for ( var i in json ) {
           json[i]['timestamp'] = escapeHtml(json[i]['timestamp'])||"";

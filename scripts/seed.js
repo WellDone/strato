@@ -21,7 +21,7 @@ function addMonitor(monitor) {
 	var options = {
     hostname: 'localhost',
     port: 3000,
-    path: '/api/monitors',
+    path: '/api/v1/monitors',
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': monitor.length

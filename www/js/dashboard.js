@@ -48,11 +48,11 @@ var addMarkersToMap = function( filter ) {
 	map.addLayer(markers);
 }
 
-$.getJSON( "/api/monitors", function(monitors) {
+$.getJSON( "/api/v1/monitors", function(monitors) {
 	data.monitors = monitors;
-	$.getJSON( "/api/reports", function(reports) {
+	$.getJSON( "/api/v1/reports", function(reports) {
 		data.reports = reports;
-		$.getJSON( "/api/alerts", function(alerts) {
+		$.getJSON( "/api/v1/alerts", function(alerts) {
 			data.alerts = alerts;
 			var failed_count = _.reduce(monitors, function(r, val) {
 				return (val.status == 'failed')? r+1 : r;
