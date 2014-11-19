@@ -29,7 +29,7 @@ function ConstructReport() {
   return bytes.toString( 'base64' );
 }
 
-describe('SMS Gateway:', function(){
+describe('SMSSync Gateway:', function(){
   var monitor = null;
   var gsmid = "+5555555555";
   it('create new monitor', function(done){
@@ -51,7 +51,7 @@ describe('SMS Gateway:', function(){
   });
   var reportID = null;
   it('post a report to the gateway', function(done){
-  	superagent.post('http://localhost:3000/gateway/sms')
+  	superagent.post('http://localhost:3000/gateway/smssync')
       .send({
         from: gsmid,
         message: ConstructReport()
@@ -61,11 +61,25 @@ describe('SMS Gateway:', function(){
   			expect(res.status).to.eql(200);
   			expect(res.body).to.be.an('object');
         expect(res.body).not.to.be.an('array');
-        expect(res.body.gsmid).to.eql(monitor.gsmid);
-  			expect(res.body.monitors_id).to.eql(monitor._id);
-        reportID = res.body._id;
+        expect(res.body.payload.success).to.eql(true);
+        expect(res.body.payload.error).to.eql(null);
   			done()
   		})
+  })
+
+  it('get the report to ensure it was created', function(done) {
+    superagent.get('http://localhost:3000/api/v1/monitors/' + monitor._id + '/reports')
+      .end(function(e,res){
+        expect(e).to.eql(null);
+        expect(res.status).to.eql(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.eql(1);
+        expect(res.body[0].gsmid).to.eql(monitor.gsmid);
+        expect(res.body[0].monitors_id).to.eql(monitor._id);
+        reportID = res.body[0]._id;
+        done();
+      })
   })
 
   it('clean up the report', function(done) {

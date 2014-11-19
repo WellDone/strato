@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "node ./node_modules/gulp/bin/gulp.js",
     "start": "node ./node_modules/supervisor/lib/cli-wrapper.js -w index.js,lib index.js",
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha --recursive"
   },
   "author": "",
   "license": "ISC",
