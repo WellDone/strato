@@ -7,7 +7,7 @@ describe('REST api server, monitors resource:', function(){
   var location = [0,0]
 
   it('create new monitor', function(done){
-    superagent.post('http://localhost:3000/api/monitors')
+    superagent.post('http://localhost:3000/api/v1/monitors')
       .send({
       	name: name,
         location: location
@@ -23,7 +23,7 @@ describe('REST api server, monitors resource:', function(){
       })
   });
   it('fetch new monitor', function(done){
-  	superagent.get('http://localhost:3000/api/monitors/' + id)
+  	superagent.get('http://localhost:3000/api/v1/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -36,7 +36,7 @@ describe('REST api server, monitors resource:', function(){
   		})
   })
   it('delete the monitor', function(done){
-  	superagent.del('http://localhost:3000/api/monitors/' + id)
+  	superagent.del('http://localhost:3000/api/v1/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -44,7 +44,7 @@ describe('REST api server, monitors resource:', function(){
   		})
   })
   it('fetch the non-existent deleted monitor', function(done){
-  	superagent.get('http://localhost:3000/api/monitors/' + id)
+  	superagent.get('http://localhost:3000/api/v1/monitors/' + id)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(404);
