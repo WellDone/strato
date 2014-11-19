@@ -35,7 +35,7 @@ function SendFakeReport() {
     message: ConstructReport()
   }
   
-  superagent.post('http://localhost:3000/gateway/sms')
+  superagent.post('http://localhost:3000/gateway/smssync')
     .send(data)
     .end(function(e,res) {
       if ( e )
@@ -49,7 +49,13 @@ function SendFakeReport() {
         console.log( res.text );
         return;
       }
-      console.log("\t" + res.body._id);
+      if ( !res.body.payload.success )
+      {
+        console.log("Payload indicated error:");
+        console.log( "\t"+res.body.payload.error );
+        return;
+      }
+      console.log("\tOK" );
     })
 }
 function SendFakeReportEvery(ms) {
