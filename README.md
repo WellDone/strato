@@ -12,7 +12,7 @@ sudo npm install -g bower gulp
 git clone https://www.github.com/welldone/strato2
 cd strato2
 npm install
-npm test
 
 nohup npm start &
+npm test
 ```
