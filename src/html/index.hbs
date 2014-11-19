@@ -1,6 +1,6 @@
-{{> partials/header}}
+{{> _partials/header}}
 <div id="wrapper">
-  {{> partials/nav}}
+  {{> _partials/nav}}
     <div id="page-wrapper">
       <div class="row">
           <div class="col-lg-12">
@@ -11,30 +11,30 @@
       <!-- /.row -->
       <div class="row">
           <div class="col-lg-3 col-md-6">
-              {{> partials/dashboard/stats/daily-report-count}}
+              {{> _partials/dashboard/stats/daily-report-count}}
           </div>
 
           <div class="col-lg-3 col-md-6">
-              {{> partials/dashboard/stats/status-ok}}
+              {{> _partials/dashboard/stats/status-ok}}
           </div>
           
           <div class="col-lg-3 col-md-6">
-              {{> partials/dashboard/stats/status-failed}}
+              {{> _partials/dashboard/stats/status-failed}}
           </div>
           <div class="col-lg-3 col-md-6">
-              {{> partials/dashboard/stats/status-unknown}}
+              {{> _partials/dashboard/stats/status-unknown}}
           </div>
       </div>
       <!-- /.row -->
       <div class="row">
           <div class="col-lg-8">
-          		{{> partials/dashboard/map}}
-              {{> partials/dashboard/aggregates-chart}}
+          		{{> _partials/dashboard/map}}
+              {{> _partials/dashboard/aggregates-chart}}
           </div>
           <!-- /.col-lg-8 -->
           <div class="col-lg-4">
-              {{> partials/dashboard/functionality-chart}}
-          		{{> partials/dashboard/recent-reports}}
+              {{> _partials/dashboard/functionality-chart}}
+          		{{> _partials/dashboard/recent-reports}}
           </div>
           <!-- /.col-lg-4 -->
       </div>
@@ -43,7 +43,7 @@
     <!-- /#page-wrapper -->
 </div>
 
-{{> partials/commonjs}}
+{{> _partials/commonjs}}
 <!-- Morris Charts JavaScript -->
 <script src="bower_components/raphael/raphael-min.js"></script>
 <script src="bower_components/morrisjs/morris.min.js"></script>
@@ -54,4 +54,4 @@
 
 <script src="js/dashboard.js"></script>
 
-{{> partials/footer}}
+{{> _partials/footer}}
