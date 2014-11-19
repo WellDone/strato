@@ -44,6 +44,7 @@ $(function() {
   } );
   if ( query )
   {
+    $('#monitors-filter').removeClass('hidden').html("Filters: <span class='filter-toggle label label-info'><a href='/monitors.html'><i class='fa fa-times-circle'></i></a>&nbsp;status: " + escapeHtml(query) + "</span>");
     tbl.on( 'draw.dt', function () {
       tbl.off('draw.dt');
       tbl.api().column(4).search(query).draw();

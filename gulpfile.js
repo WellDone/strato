@@ -47,6 +47,6 @@ gulp.task('hbs', function () {
 })
 
 gulp.task('default', ['bower','move', 'hbs']);
-gulp.task('watch', function() {
+gulp.task('watch', ['default'],function() {
   var watcher = gulp.watch('src/**/*.*', ['default']);
 })

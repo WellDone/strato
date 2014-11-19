@@ -67,3 +67,11 @@ span.footer {
   	display: none !important;
   }
 }
+
+#monitors-filter {
+	margin-bottom: 5px;
+}
+
+.filter-toggle a {
+	color:white;
+}
