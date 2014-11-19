@@ -1,4 +1,4 @@
-var http = require('http');
+var superagent = require('superagent');
 var _ = require('lodash');
 
 var monitors = [
@@ -17,41 +17,25 @@ monitors = _.map( monitors, function( v ) {
 })
 
 function addMonitor(monitor) {
-	monitor = JSON.stringify( monitor );
-	var options = {
-    hostname: 'localhost',
-    port: 3000,
-    path: '/api/v1/monitors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': monitor.length
-    },
-    method: 'POST',
-    rejectUnauthorized: false,
-    agent:false
-  };
-  var req = http.request(options, function(res) {
-    if ( res.statusCode != 201 )
-    {
-      console.log( "FAILED" );
-      console.log("statusCode: ", res.statusCode);
-      console.log("headers: ", res.headers);
-    }
-    res.on('data', function(d) {
-      process.stdout.write(d);
+  superagent.post('http://localhost:3000/api/v1/monitors')
+    .send(monitor)
+    .end(function(e,res) {
+      if ( e )
+      {
+        console.log( "ERR %s", e );
+        return;
+      }
+      if ( res.statusCode != 201 )
+      {
+        console.log("HTTP ERROR ", res.statusCode);
+        console.log( res.text );
+        return;
+      }
+      console.log("\t" + res.body._id);
     });
-    res.on('end', function() {
-      process.stdout.write('\n');
-    })
-  });
-  req.write( monitor )
-  req.end();
-
-  req.on( 'error', function(e) {
-    console.log( "ERROR: " + e );
-  } )
 }
 
 for ( var i in monitors ) {
 	addMonitor( monitors[i] );
 }
+console.log( "Creating %d monitors...", monitors.length );
