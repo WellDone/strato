@@ -14,7 +14,7 @@ $(function() {
   var tbl = $('#dataTables-example').dataTable( {
     columns: [
       { data: 'timestamp' },
-      { data: 'monitor_id' },
+      { data: 'monitors_id' },
       { data: 'batteryVoltage' },
       { data: 'gateway' },
       { data: 'gsmid' },
@@ -25,7 +25,7 @@ $(function() {
       dataSrc: function( json ) {
         for ( var i in json ) {
           json[i]['timestamp'] = escapeHtml(json[i]['timestamp'])||"";
-          json[i]['monitor_id'] = escapeHtml(json[i]['monitor_id'])||"";
+          json[i]['monitors_id'] = escapeHtml(json[i]['monitors_id'])||"";
           json[i]['batteryVoltage'] = escapeHtml(json[i]['batteryVoltage'])||"";
           json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
           json[i]['gateway'] = escapeHtml(json[i]['gateway'])||"";
