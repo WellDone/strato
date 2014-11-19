@@ -2,7 +2,7 @@ var superagent = require('superagent')
 var expect = require('expect.js')
 var _ = require('lodash')
 
-describe('REST api server, monitors resource:', function(){
+describe('REST api v1.0, monitors resource:', function(){
   var id = null;
   var name = 'TestMonitor'
   var location = [0,0]
