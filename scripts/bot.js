@@ -1,22 +1,9 @@
-var http = require( 'http' );
+var superagent = require('superagent');
 
-//var b64str = "AQAsAAAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-//console.log( b64str );
 var sequence = 0;
 
 function ConstructReport( value ) {
   var bytes = new Buffer(104);
-  // bytes[0] = 1; //version
-  // bytes[1] = 1; //currentHour
-  // bytes.writeUInt16BE( 49189, 2 ); //currentHour
-  // bytes[4] = 0; //hour count
-  // bytes[5] = value || Math.floor((Math.random()*50)+1); //event count
-  // bytes[6] = 4; //sensor type
-  // bytes[7] = 0; //unused
-  // for (var i=8; i<104;) {
-  //   bytes.writeUInt32LE( Math.floor(Math.random()*100), i )
-  //   i+=4;
-  // }
 
   bytes[0] = 2; //version
   bytes[1] = 42; //sensor ID
@@ -47,42 +34,26 @@ function SendFakeReport() {
     from: "+123456",
     message: ConstructReport()
   }
-  var payload = JSON.stringify( data )
-  console.log( payload );
   
-  var options = {
-    hostname: 'localhost',
-    port: 3000,
-    path: '/gateway/sms',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': payload.length
-    },
-    method: 'POST',
-    rejectUnauthorized: false,
-    agent:false
-  };
-  var req = http.request(options, function(res) {
-    if ( res.statusCode != 200 )
-    {
-      console.log( "FAILED" );
-      console.log("statusCode: ", res.statusCode);
-      console.log("headers: ", res.headers);
-    }
-    res.on('data', function(d) {
-      process.stdout.write(d);
-    });
-    res.on('end', function() {
-      process.stdout.write('\n');
+  superagent.post('http://localhost:3000/gateway/sms')
+    .send(data)
+    .end(function(e,res) {
+      if ( e )
+      {
+        console.log( "ERR %s", e );
+        return;
+      }
+      if ( res.statusCode != 200 )
+      {
+        console.log("HTTP ERROR ", res.statusCode);
+        console.log( res.text );
+        return;
+      }
+      console.log("\t" + res.body._id);
     })
-    setTimeout( SendFakeReport, 10000 );
-  });
-  req.write( payload )
-  req.end();
-
-  req.on( 'error', function(e) {
-    console.log( "ERROR: " + e );
-  } )
+}
+function SendFakeReportEvery(ms) {
+  setInterval( SendFakeReport, ms );
 }
 
-SendFakeReport();
+SendFakeReportEvery(process.argv[2] || 1000);
