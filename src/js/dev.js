@@ -83,10 +83,7 @@ $(function() {
 
  	var apiQueryResponse = function() {};
  	$.get("client_templates/api-query-template.hbs", function(data) {
- 		console.log( data );
  	 	apiQueryResponse = Handlebars.compile( data );
- 		console.log( apiQueryResponse );
- 		console.log( apiQueryResponse({name: "hello"}));
  	});
 	$('#dev-link-clear').click( function(e) {
 		e.preventDefault();
@@ -167,9 +164,7 @@ $(function() {
 				size: size,
 				latency: endTime.valueOf() - startTime.valueOf()
 			}
-			console.log(templateData);
 			var html = apiQueryResponse( templateData );
-			console.log(html)
 			outputDiv.html( html );
 			outputDiv.find('div.text-select').click( selectTextClick );
 			outputDiv.find('span.response-toggle').click( toggleResponseClick );
