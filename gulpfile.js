@@ -27,7 +27,7 @@ gulp.task('bower', function(cb){
 gulp.task('move', function(){
   // the base option sets the relative root for the set of files,
   // preserving the folder structure
-  gulp.src(['src/**/*.*', '!src/**/*.hbs'])
+  gulp.src(['src/**/*.*', '!src/html/**/*.hbs'])
   .pipe(gulp.dest('./www'));
 });
 
