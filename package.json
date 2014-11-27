@@ -8,7 +8,12 @@
     "start": "node ./node_modules/supervisor/lib/cli-wrapper.js -w index.js,lib index.js",
     "test": "./node_modules/mocha/bin/mocha --recursive"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/welldone/strato2.git"
+  },
+  "private": "true",
+  "author": "Austin McGee (WellDone)",
   "license": "ISC",
   "dependencies": {
     "express": "^4.10.2",
@@ -17,7 +22,7 @@
     "compression": "^1.2.0",
     "lodash": "^2.4.1",
     "superagent": "^0.21.0",
-    "remjs": "^0.1.1"
+    "remjs": "^0.2.2"
   },
   "devDependencies": {
     "handlebars": "^2.0.0",
