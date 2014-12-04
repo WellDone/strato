@@ -32,5 +32,5 @@ ln -fs /welldone/scripts/upstart.conf /etc/init/strato.conf
 initctl reload-configuration
 service start strato
 
-ln -fs /welldone/scripts/nginx.cfg /etc/nginx/sites-enabled/default
+ln -fs /welldone/scripts/nginx.conf /etc/nginx/sites-enabled/default
 sudo /etc/init.d/nginx restart

@@ -42,7 +42,7 @@ $(function() {
             $('input[name=password]').val("").addClass('has-error');
         });
     }
-    $('#login-btn').click( function(e) {
+    $('#login-form').submit( function(e) {
         e.preventDefault();
         if ( type == "login" )
             login();
