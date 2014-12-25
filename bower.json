@@ -24,6 +24,7 @@
     "jquery": "~2.1.1",
     "morrisjs": "~0.5.1",
     "handlebars": "~2.0.0",
-    "jwt-decode": "*"
+    "jwt-decode": "*",
+    "datatables": "~1.10.4"
   }
 }
