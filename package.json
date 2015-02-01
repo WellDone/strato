@@ -23,14 +23,15 @@
     "lodash": "^2.4.1",
     "superagent": "^0.21.0",
     "remjs": "^0.3.5",
-
     "gulp-compile-handlebars": "^0.3.3",
     "gulp": "^3.8.10",
     "gulp-rename": "^1.2.0",
     "gulp-clean": "^0.3.1",
     "bower": "^1.3.12",
     "handlebars": "^2.0.0",
-    "supervisor": "^0.6.0"
+    "supervisor": "^0.6.0",
+    "bluebird": "^2.9.4",
+    "mongodb": "^1.4.29"
   },
   "devDependencies": {
     "mocha": "^2.0.1",
