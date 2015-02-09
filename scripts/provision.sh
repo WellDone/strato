@@ -11,6 +11,9 @@ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | 
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 
+
+echo "export DATABASE_URL=mongodb://localhost:27017/strato" >> /home/vagrant/.profile
+
 if [ "$1" == "production" ]; then
 	git clone https://www.github.com/welldone/strato2.git /welldone
 else

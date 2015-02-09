@@ -1,7 +1,7 @@
 var expect = require('expect.js')
 var gatewayScaffold = require('./_scaffold_.gateway.test');
 
-gatewayScaffold( 'nexmo', function( payload ) {
+gatewayScaffold( 'nexmo', 2, function( payload ) {
 	return {
 		text: payload.content,
 		msisdn: payload.gsmid,

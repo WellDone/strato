@@ -1,7 +1,7 @@
 var expect = require('expect.js')
 var gatewayScaffold = require('./_scaffold_.gateway.test');
 
-gatewayScaffold( 'smssync', function(payload) {
+gatewayScaffold( 'smssync', 2, function(payload) {
   return {
     message: payload.content,
     from: payload.gsmid,

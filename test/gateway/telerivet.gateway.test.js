@@ -1,7 +1,7 @@
 var expect = require('expect.js')
 var gatewayScaffold = require('./_scaffold_.gateway.test');
 
-gatewayScaffold( 'telerivet', function( payload ) {
+gatewayScaffold( 'telerivet', 2, function( payload ) {
 	return {
 		content: payload.content,
 		from_number: payload.gsmid,
