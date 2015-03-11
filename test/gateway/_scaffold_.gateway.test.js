@@ -56,19 +56,22 @@ function ConstructReport( version ) {
   return bytes.toString( 'base64' );
 }
 
-all_versions = [ 2, 3 ];
+all_versions = [ 3 ];
 function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
   describe("Gateway '" + gatewayName + "'", function(){
     before( function() {
       
     })
     var monitor = null;
-    var gsmid = "+5555555555";
-    it('create new monitor', function(done){
+    var uuid = 42;
+    var gsmid = "+5555555";
+    before(function(done){
+      console.log("Creating monitor...");
       superagent.post('http://localhost:3000/api/v1/monitors')
         .send({
           name: 'TestMonitor',
           location: [0,0],
+          uuid: uuid,
           gsmid: gsmid
         })
         .end(function(e,res){
@@ -76,7 +79,7 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
           expect(res.status).to.eql(201);
           expect(res.body).to.be.an('object');
           expect(res.body).not.to.be.an('array');
-          expect(res.body._id.length).to.eql(16);
+          expect(res.body._id.length).to.eql(24);
           monitor = res.body;
           done();
         })
@@ -112,7 +115,6 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
               expect(res.body).to.be.an('object');
               expect(res.body).to.be.an('array');
               expect(res.body.length).to.eql(1);
-              expect(res.body[0].gsmid).to.eql(monitor.gsmid);
               expect(res.body[0].monitors_id).to.eql(monitor._id);
               reportID = res.body[0]._id;
               done();
@@ -129,7 +131,8 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
       });
     });
     
-    it('delete the monitor', function(done){
+    after(function(done){
+      console.log("Deleting monitor...");
       superagent.del('http://localhost:3000/api/v1/monitors/' + monitor._id)
         .end(function(e,res){
           expect(e).to.eql(null);

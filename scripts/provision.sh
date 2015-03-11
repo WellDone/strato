@@ -1,8 +1,8 @@
 apt-get update
 apt-get install -y nginx git
 
-apt-get install -y python-software-properties python g++ make
-add-apt-repository ppa:chris-lea/node.js
+apt-get install -y python-software-properties python g++ make curl
+curl -sL https://deb.nodesource.com/setup | sudo bash -
 apt-get update
 apt-get install -y nodejs
 
@@ -17,7 +17,7 @@ echo "export DATABASE_URL=mongodb://localhost:27017/strato" >> /home/vagrant/.pr
 if [ "$1" == "production" ]; then
 	git clone https://www.github.com/welldone/strato2.git /welldone
 else
-	rm /welldone
+	rm /welldone || true
 	if [ -d "/vagrant" ]; then
 		ln -s /vagrant /welldone
 	fi
@@ -33,7 +33,7 @@ npm install
 
 ln -fs /welldone/scripts/upstart.conf /etc/init/strato.conf
 initctl reload-configuration
-service start strato
+start strato
 
 ln -fs /welldone/scripts/nginx.conf /etc/nginx/sites-enabled/default
 sudo /etc/init.d/nginx restart

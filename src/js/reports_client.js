@@ -17,17 +17,16 @@ $(function() {
       { data: 'monitors_id' },
       { data: 'batteryVoltage' },
       { data: 'gateway' },
-      { data: 'gsmid' },
       { data: 'status' }
     ],
+    order: [[0, "desc"]],
     ajax: {
       url: '/api/v1/reports',
       dataSrc: function( json ) {
         for ( var i in json ) {
-          json[i]['timestamp'] = escapeHtml(json[i]['timestamp'])||"";
+          json[i]['timestamp'] = isNaN(json[i]['timestamp']) ? "" : new Date(json[i]['timestamp']);
           json[i]['monitors_id'] = escapeHtml(json[i]['monitors_id'])||"";
           json[i]['batteryVoltage'] = escapeHtml(json[i]['batteryVoltage'])||"";
-          json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
           json[i]['gateway'] = escapeHtml(json[i]['gateway'])||"";
 
           var statusLabel = "";

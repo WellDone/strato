@@ -18,7 +18,7 @@ describe('REST api v1.0, monitors resource:', function(){
       	expect(res.status).to.eql(201);
         expect(res.body).to.be.an('object');
         expect(res.body).not.to.be.an('array');
-        expect(res.body._id.length).to.eql(16);
+        expect(res.body._id.length).to.eql(24);
         id = res.body._id;
         done();
       })
@@ -60,7 +60,7 @@ describe('REST api v1.0, monitors resource:', function(){
 	      	expect(res.status).to.eql(201);
 	        expect(res.body).to.be.an('object');
 	        expect(res.body).not.to.be.an('array');
-	        expect(res.body._id.length).to.eql(16);
+	        expect(res.body._id.length).to.eql(24);
 	        expect(res.body.value).to.eql(dummy_value);
 	        expect(res.body.monitors_id).to.eql(id);
 	        reports.push(res.body._id);

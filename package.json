@@ -22,7 +22,7 @@
     "compression": "^1.2.0",
     "lodash": "^2.4.1",
     "superagent": "^0.21.0",
-    "remjs": "^0.3.5",
+    "remjs": "^0.3.6",
     "gulp-compile-handlebars": "^0.3.3",
     "gulp": "^3.8.10",
     "gulp-rename": "^1.2.0",
