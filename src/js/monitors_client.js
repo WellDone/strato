@@ -14,19 +14,19 @@ $(function() {
   var tbl = $('#dataTables-example').dataTable( {
     columns: [
       { data: 'name' },
-      { data: 'location' },
-      { data: 'gsmid' },
-      { data: 'timeSinceLastReport' },
-      { data: 'status' }
+      // { data: 'location' },
+      // { data: 'gsmid' },
+      // { data: 'timeSinceLastReport' },
+      // { data: 'status' }
     ],
     ajax: {
       url: '/api/v1/monitors',
       dataSrc: function( json ) {
         for ( var i in json ) {
           json[i]['name'] = escapeHtml(json[i]['name'])||"";
-          json[i]['location'] = escapeHtml(json[i]['location'])||"";
-          json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
-          json[i]['timeSinceLastReport'] = escapeHtml(json[i]['timeSinceLastReport'])||"";
+          // json[i]['location'] = escapeHtml(json[i]['location'])||"";
+          // json[i]['gsmid'] = escapeHtml(json[i]['gsmid'])||"";
+          // json[i]['timeSinceLastReport'] = escapeHtml(json[i]['timeSinceLastReport'])||"";
 
           var statusLabel = "";
           if ( json[i]['status'] == 'ok' )
@@ -35,12 +35,19 @@ $(function() {
             statusLabel = "label-danger";
           else if ( json[i]['status'] == 'unknown' )
             statusLabel = "label-warning";
-          json[i]['status'] = "<span class='label " + statusLabel + "'>" + (escapeHtml(json[i]['status'])||"") + "</span>";
+          // json[i]['status'] = "<span class='label " + statusLabel + "'>" + (escapeHtml(json[i]['status'])||"") + "</span>";
         }
-        console.log(json);
         return json;
       }
-    }
+    },
+    fnRowCallback: function( nRow, aData, iDisplayIndex ) {
+      $(nRow).click(function() {
+        console.log(aData);
+        //assuming your redirect id is in aData[0] as invisible column for example
+        // nRow.setAttribute("id",aData[0])
+        document.location.href = "monitor.html?id=" + aData['_id'];
+      });
+    },
   } );
   if ( query )
   {

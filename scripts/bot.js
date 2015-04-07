@@ -1,8 +1,25 @@
 var superagent = require('superagent');
+var hostname = 'localhost:3000';
+var period = 1000;
+var uuid = Math.floor( Math.random()*(Math.pow(2,32)) );
+console.log(uuid);
+if ( process.argv.length >= 3 )
+{
+  hostname = process.argv[2];
+}
+if ( process.argv.length >= 4 )
+{
+  period = parseInt(process.argv[3]);
+  if ( isNaN(period) )
+  {
+    console.error("Bad report period.");
+    process.exit(1)
+  }
+}
 
 var sequence = 0;
 
-function ConstructReport( value ) {
+function ConstructV2Report( value ) {
   var bytes = new Buffer(104);
 
   bytes[0] = 2; //version
@@ -29,15 +46,42 @@ function ConstructReport( value ) {
   return bytes.toString( 'base64' );
 }
 
-function SendFakeReport() {
-  var data = {
-    from: "+123456",
-    message: ConstructReport()
+function ConstructV3Report( value ) {
+  var timestamp = Math.floor((new Date().getTime() - new Date('January 1, 2000 GMT').getTime())/1000);
+  var bytes = new Buffer(108);
+  bytes[0] = 3; //version
+  bytes[1] = 42; // sequence
+  bytes.writeUInt32LE( uuid, 2 ); // uuid
+  bytes.writeUInt16LE( 0, 6 ); // flags
+  bytes.writeUInt32LE( timestamp, 8 ); // timestamp
+  bytes.writeUInt16LE( 650, 12 ); // battery voltage
+  bytes[14] = 0x61; // count, min, max
+  bytes[15] = 0x05; // count, mean
+  bytes[16] = 0x60;
+  bytes[17] = 0x0A;
+
+  bytes.writeUInt16LE( Math.floor(Math.random()*100)*10, 18 ) //count
+  bytes.writeUInt16LE( Math.floor(Math.random()*200), 20 ) //min
+  bytes.writeUInt16LE( (Math.random() < 0.5)? 0 : (Math.floor(Math.random()*200)+800), 22 ) //max
+
+  for ( var i = 0; i < 10; ++i ) {
+    bytes.writeUInt16LE( Math.floor(Math.random()*100), 24+(i*4) ) //count
+    bytes.writeUInt16LE( Math.floor(Math.random()*600)+200, 26+(i*4) ) //mean
   }
+  return bytes.toString('base64');
+}
+
+function SendFakeReport() {
+  var url = 'http://' + hostname + '/gateway/http';
+  var data = ConstructV3Report();
+
+  console.log("Sending " + JSON.stringify(data) + " to " + url);
   
-  superagent.post('http://localhost:3000/gateway/smssync')
+  superagent.post(url)
+    .type('text')
     .send(data)
     .end(function(e,res) {
+      console.log("END");
       if ( e )
       {
         console.log( "ERR %s", e );
@@ -49,17 +93,18 @@ function SendFakeReport() {
         console.log( res.text );
         return;
       }
-      if ( !res.body.payload.success )
-      {
-        console.log("Payload indicated error:");
-        console.log( "\t"+res.body.payload.error );
-        return;
-      }
+      // if ( !res.body.payload.success )
+      // {
+      //   console.log("Payload indicated error:");
+      //   console.log( "\t"+res.body.payload.error );
+      //   return;
+      // }
       console.log("\tOK" );
     })
 }
 function SendFakeReportEvery(ms) {
+  SendFakeReport();
   setInterval( SendFakeReport, ms );
 }
 
-SendFakeReportEvery(process.argv[2] || 1000);
+SendFakeReportEvery(period);

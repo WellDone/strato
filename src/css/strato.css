@@ -96,3 +96,14 @@ span.footer {
   padding-bottom: 5px;
   line-height: 1
 }
+
+.table-linked-rows tr {
+	cursor: pointer;
+}
+
+.right-edit {
+	margin-left:10px;
+	color: #999999;
+	cursor: pointer;
+	font-size:80%;
+}

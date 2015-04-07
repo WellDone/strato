@@ -4,27 +4,61 @@
     <div id="page-wrapper">
       <div class="row">
           <div class="col-lg-12">
-              <h3 class="page-header"><span id='monitor-name'>&lt;No Name&gt;</span></h3>
+              <h3 class="page-header"><span id='monitor-name'>&lt;Loading...&gt;</span><!-- <i id='monitor-name-edit' class="right-edit fa fa-pencil-square-o"></i> --></h3>
           </div>
           <!-- /.col-lg-12 -->
       </div>
       <!-- /.row -->
       <div class="row">
           <div class="col-lg-8">
-          		
+              <p>Last report: <span style='font-weight:bold' id='last-report-time'></span></p>
           </div>
-          <!-- /.col-lg-8 -->
           <div class="col-lg-4">
-            
+              <div id="monitor-map"></div>
           </div>
-          <!-- /.col-lg-4 -->
       </div>
-      <!-- /.row -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-line-chart fa-fw"></i> Data
+                <div class="pull-right">
+                    Metric: 
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" >
+                            <span id='metric-selected'>...</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu" id="metric-selector">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+              <div id="monitor-data-chart"></div>
+            </div>
+            <!-- /.panel-body -->
+          </div>
+        <!-- /.panel -->
+        </div>
+      </div>
     </div>
     <!-- /#page-wrapper -->
 </div>
 
 {{> _partials/commonjs}}
 
+<script src="bower_components/raphael/raphael-min.js"></script>
+<script src="bower_components/morrisjs/morris.min.js"></script>
+
+<script src="js/countries.geo.js" type="text/javascript"></script>
+<script src="bower_components/leaflet/dist/leaflet.js"></script>
+<script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<script src="js/monitor_client.js"></script>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 {{> _partials/footer}}
