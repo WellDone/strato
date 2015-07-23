@@ -17,7 +17,7 @@
   "dependencies": {
     "chartist": "~0.3.1",
     "leaflet.markercluster": "~0.4.0",
-    "lodash": "~2.4.1",
+    "lodash": "~3.6.0",
     "leaflet": "~0.7.3",
     "fontawesome": "~4.2.0",
     "bootstrap": "~3.3.1",
@@ -25,6 +25,7 @@
     "morrisjs": "~0.5.1",
     "handlebars": "~2.0.0",
     "jwt-decode": "*",
-    "datatables": "~1.10.4"
+    "datatables": "~1.10.4",
+    "dygraphs": "~1.1.0"
   }
 }

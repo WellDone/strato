@@ -1,7 +1,7 @@
 var superagent = require('superagent');
-var hostname = 'localhost:3000';
+var hostname = 'localhost:8080';
 var period = 1000;
-var uuid = Math.floor( Math.random()*(Math.pow(2,32)) );
+var uuid = 2062449410;//Math.floor( Math.random()*(Math.pow(2,32)) );
 console.log(uuid);
 if ( process.argv.length >= 3 )
 {
@@ -60,9 +60,10 @@ function ConstructV3Report( value ) {
   bytes[16] = 0x60;
   bytes[17] = 0x0A;
 
+  var zero = (Math.random() < 0.5);
   bytes.writeUInt16LE( Math.floor(Math.random()*100)*10, 18 ) //count
-  bytes.writeUInt16LE( Math.floor(Math.random()*200), 20 ) //min
-  bytes.writeUInt16LE( (Math.random() < 0.5)? 0 : (Math.floor(Math.random()*200)+800), 22 ) //max
+  bytes.writeUInt16LE( (zero)? 0 : Math.floor(Math.random()*200), 20 ) //min
+  bytes.writeUInt16LE( (zero)? 0 : (Math.floor(Math.random()*200)+800), 22 ) //max
 
   for ( var i = 0; i < 10; ++i ) {
     bytes.writeUInt16LE( Math.floor(Math.random()*100), 24+(i*4) ) //count

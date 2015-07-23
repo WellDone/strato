@@ -14,4 +14,8 @@ BPromise.join(
 	var port = process.env['PORT'] || 3000;
 	console.log("Starting server on port %d...", port);
 	server.listen( port );
+
+	// if ( !db.db.collection('people').findOne({masterOfTheUniverse: true}) ) {
+	// 	console.error("WARNING: No master of the universe!")
+	// }
 })

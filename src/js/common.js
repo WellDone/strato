@@ -36,6 +36,14 @@ $.ajaxSetup({
     'Authorization': "Bearer " + window.sessionStorage.auth_token
   }
 });
+$(document).ajaxComplete(function( event,request, settings ) {
+  if ( request.status == 401 && request.getResponseHeader('WWW-Authenticate') == "Bearer" )
+    logout();
+});
+
+$.getJSON( "/api/v1/me", function(me) {
+  window.me = me;
+} );
 
 var entityMap = {
   "&": "&amp;",

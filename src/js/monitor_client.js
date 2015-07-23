@@ -42,20 +42,38 @@ function addKey(key) {
 function selectKey(key) {
 	selectedKey = key;
 	$('#metric-selected').text(key);
-	redraw();
+	if ( !dataGraph )
+		return;
+	_.forEach(_.keys(keys), function(k, i) {
+		dataGraph.setVisibility(i, k==key);
+	});
 }
 var selectedKey;
 
 function redraw()
 {
 	$('#monitor-data-chart').html("");
-	dataGraph = Morris.Line({
-		element: 'monitor-data-chart',
-		data: data,
-		xkey: 'timestamp',
-		ykeys: [selectedKey],
-		labels: [selectedKey]
-	})
+	if ( data.length == 0 )
+		return;
+	dataGraph = new Dygraph(document.getElementById('monitor-data-chart'),
+		data,
+		{
+			// customBars: true,
+      title: 'Data',
+      //ylabel: 'Temperature (F)',
+      legend: 'always',
+      labelsDivStyles: { 'textAlign': 'right' },
+      showRangeSelector: true,
+      showRoller: true,
+			labels: _.flatten(['Time', _.keys(keys)])
+		});
+	// dataGraph = Morris.Line({
+	// 	element: 'monitor-data-chart',
+	// 	data: data,
+	// 	xkey: 'timestamp',
+	// 	ykeys: [selectedKey],
+	// 	labels: [selectedKey]
+	// })
 }
 addKey('battery');
 selectKey('battery');
@@ -73,27 +91,27 @@ function refresh() {
 		$('#last-report-time').text( prettifyTimeDelta(new Date(reports[0].report.timestamp).getTime()*1000, new Date().getTime()) + " ago" );
 
 		_.forEach(reports, function(r) {
-			var item = {};
-			item.timestamp = new Date(r.report.timestamp).getTime()*1000 + new Date('January 1, 1970 GMT').getTime();
-			item['battery'] = r.report.batteryVoltage;
+			var item = [];
+			_.fill(item, null,  0, _.keys(keys).length+1);
+			item[0] = new Date(r.report.timestamp).getTime()*1000 + new Date('January 1, 1970 GMT').getTime();
+			item[0] = new Date(item[0]);
+			item[_.indexOf(_.keys(keys), 'battery')+1] = r.report.batteryVoltage;
 			_.forEach( r.report.bulkAggregates, function(val, key) {
 				if ( !keys[key] )
 				{
 					addKey(key);
 				}
-				item[key] = val;
+				item[_.indexOf(_.keys(keys),key)+1] = val;
 			})
 			data.push(item);
 		});
 
 		if ( !dataGraph )
-		{
 			redraw();
-		}
 		else
-		{
-			dataGraph.setData(data);
-		}
+			dataGraph.updateOptions({'file': data, 'labels': _.keys(keys)});
+
+		selectKey(selectedKey);
 	})
 }
 

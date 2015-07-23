@@ -1,23 +1,23 @@
-Morris.Area({
-	element: 'dashboard-history-chart',
-	data: [
-		{ year: '2008', total: 1000 },
-		{ year: '2009', total: 1500 },
-		{ year: '2010', total: 2500 },
-		{ year: '2011', total: 3000 },
-		{ year: '2012', total: 4000 },
-		{ year: '2013', total: 5000 },
-		{ year: '2014', total: 3500 }
-	],
-	xkey: 'year',
-	ykeys: ['total'],
-	labels: ['Volume (L)']
-})
+// Morris.Area({
+// 	element: 'dashboard-history-chart',
+// 	data: [
+// 		{ year: '2008', total: 1000 },
+// 		{ year: '2009', total: 1500 },
+// 		{ year: '2010', total: 2500 },
+// 		{ year: '2011', total: 3000 },
+// 		{ year: '2012', total: 4000 },
+// 		{ year: '2013', total: 5000 },
+// 		{ year: '2014', total: 3500 }
+// 	],
+// 	xkey: 'year',
+// 	ykeys: ['total'],
+// 	labels: ['Volume (L)']
+// })
 
 var map = L.map('dashboard-monitor-map', {
 	scrollWheelZoom: false,
 	maxZoom: 13
-}).setView([-8.1, 36.6833], 2);
+}).setView([37.779995, -122.39475], 2);
 
 //  L.tileLayer('http://{s}.tiles.mapbox.com/v3/austinm.k7dlholc/{z}/{x}/{y}.png', {
 //    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -42,7 +42,7 @@ var addMarkersToMap = function( filter ) {
 		if ( filter && v.status != filter )
 			return;
 		var marker = L.marker(v.location);
-		marker.bindPopup("<b>" + v.name + "</b>");
+		marker.bindPopup("<a href='/monitor.html?id="+v._id+"'><b>" + v.name + "</b></a>");
 		markers.addLayer(marker);
 	})
 	map.addLayer(markers);
@@ -64,7 +64,14 @@ $.getJSON( "/api/v1/monitors", function(monitors) {
 				return (val.status == 'unknown')? r+1 : r;
 			}, 0);
 
-			$('#daily-report-count').text(''+reports.length);
+			var dailyCount = _.reduce(reports, function(count, current) {
+				var timestamp = new Date(new Date(current['report']['timestamp']).getTime()*1000 + new Date('January 1, 1970 GMT').getTime());
+				if ( timestamp > (new Date().setHours(0,0,0,0)) )
+					return count+1;
+				else
+					return count;
+			}, 0);
+			$('#daily-report-count').text(''+dailyCount);
 			$('#status-failed-count').text(''+failed_count);
 			$('#status-ok-count').text(''+ok_count);
 			$('#status-unknown-count').text(''+unknown_count);
