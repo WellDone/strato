@@ -29,6 +29,9 @@ $(function() {
   setTimeout(function() {
     console.log("%d minute warning...", 5)
   }, (jwt.exp-(60*5)-now)*1000 )
+
+  window.me = jwt.id;
+  $("#profile-link").text(jwt.id.username);
 })();
 
 $.ajaxSetup({
