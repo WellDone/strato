@@ -1,7 +1,10 @@
 $(function() {
+  $('.org-settings').addClass('hidden');
   $.getJSON( "/api/v1/me", function(me) {
-    $("#username").text(me.username);
     $("#organization").text(me.organization || "<none>");
+    if ( me.organization ) {
+      $('.org-settings').removeClass('hidden');
+    }
   } );
 
   $('#password-reset-form').submit( function(e) {
