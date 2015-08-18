@@ -14,6 +14,16 @@ $(function() {
     })
 });
 
+$.ajaxSetup({
+  headers: {
+    'Authorization': "Bearer " + window.sessionStorage.auth_token
+  }
+});
+$(document).ajaxComplete(function( event,request, settings ) {
+  if ( request.status == 401 && request.getResponseHeader('WWW-Authenticate') == "Bearer" )
+    logout();
+});
+
 (function() {
   var jwt = null;
   try {
@@ -30,23 +40,14 @@ $(function() {
     console.log("%d minute warning...", 5)
   }, (jwt.exp-(60*5)-now)*1000 )
 
+  window.session = jwt;
   window.me = jwt.id;
   $("#profile-link").text(jwt.id.username);
+
+  $.getJSON( "/api/v1/me", function(me) {
+    window.me = me; // update if needed
+  } );
 })();
-
-$.ajaxSetup({
-  headers: {
-    'Authorization': "Bearer " + window.sessionStorage.auth_token
-  }
-});
-$(document).ajaxComplete(function( event,request, settings ) {
-  if ( request.status == 401 && request.getResponseHeader('WWW-Authenticate') == "Bearer" )
-    logout();
-});
-
-$.getJSON( "/api/v1/me", function(me) {
-  window.me = me;
-} );
 
 var entityMap = {
   "&": "&amp;",

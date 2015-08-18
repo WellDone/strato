@@ -1,4 +1,6 @@
 $(function() {
+  $.fn.dataTable.ext.errMode = 'none';
+  
   var query = window.location.search.slice(1).toLowerCase();
   if ( query.indexOf( "status=" ) == 0 )
   {

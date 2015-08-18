@@ -52,48 +52,45 @@ $.getJSON( "/api/v1/monitors", function(monitors) {
 	data.monitors = monitors;
 	$.getJSON( "/api/v1/reports", function(reports) {
 		data.reports = reports;
-		$.getJSON( "/api/v1/alerts", function(alerts) {
-			data.alerts = alerts;
-			var failed_count = _.reduce(monitors, function(r, val) {
-				return (val.status == 'failed')? r+1 : r;
-			}, 0);
-			var ok_count = _.reduce(monitors, function(r, val) {
-				return (val.status == 'ok')? r+1 : r;
-			}, 0);
-			var unknown_count = _.reduce(monitors, function(r, val) {
-				return (val.status == 'unknown')? r+1 : r;
-			}, 0);
+		var failed_count = _.reduce(monitors, function(r, val) {
+			return (val.status == 'failed')? r+1 : r;
+		}, 0);
+		var ok_count = _.reduce(monitors, function(r, val) {
+			return (val.status == 'ok')? r+1 : r;
+		}, 0);
+		var unknown_count = _.reduce(monitors, function(r, val) {
+			return (val.status == 'unknown')? r+1 : r;
+		}, 0);
 
-			var dailyCount = _.reduce(reports, function(count, current) {
-				var timestamp = new Date(new Date(current['report']['timestamp']).getTime()*1000 + new Date('January 1, 1970 GMT').getTime());
-				if ( timestamp > (new Date().setHours(0,0,0,0)) )
-					return count+1;
-				else
-					return count;
-			}, 0);
-			$('#daily-report-count').text(''+dailyCount);
-			$('#status-failed-count').text(''+failed_count);
-			$('#status-ok-count').text(''+ok_count);
-			$('#status-unknown-count').text(''+unknown_count);
+		var dailyCount = _.reduce(reports, function(count, current) {
+			var timestamp = new Date(new Date(current['report']['timestamp']).getTime()*1000 + new Date('January 1, 1970 GMT').getTime());
+			if ( timestamp > (new Date().setHours(0,0,0,0)) )
+				return count+1;
+			else
+				return count;
+		}, 0);
+		$('#daily-report-count').text(''+dailyCount);
+		$('#status-failed-count').text(''+failed_count);
+		$('#status-ok-count').text(''+ok_count);
+		$('#status-unknown-count').text(''+unknown_count);
 
-			Morris.Donut({
-			  element: 'dashboard-functionality-chart',
-			  data: [{
-			    label: "Non-functional",
-			    value: failed_count
-			  }, {
-			    label: "Functioning Normally",
-			    value: ok_count
-			  }, {
-			    label: "Status Unknown",
-			    value: unknown_count
-			  }],
-			  resize: true,
-			  colors: ['#d9534f', '#5cb85c', '#f0ad4e']
-			});
-
-			addMarkersToMap();
+		Morris.Donut({
+		  element: 'dashboard-functionality-chart',
+		  data: [{
+		    label: "Non-functional",
+		    value: failed_count
+		  }, {
+		    label: "Functioning Normally",
+		    value: ok_count
+		  }, {
+		    label: "Status Unknown",
+		    value: unknown_count
+		  }],
+		  resize: true,
+		  colors: ['#d9534f', '#5cb85c', '#f0ad4e']
 		});
+
+		addMarkersToMap();
 	})
 } );
 

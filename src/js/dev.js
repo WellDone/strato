@@ -1,4 +1,7 @@
 $(function() {
+	$('#session-username').text(window.me.username);
+	$('#session-expiration').text(new Date(window.session.exp*1000));
+	$('#session-token').val(window.sessionStorage.auth_token);
  	var requestHistory = [];
  	function selectTextClick(e) {
 	 	e.preventDefault();
