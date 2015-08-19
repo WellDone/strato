@@ -1,39 +1,15 @@
-apt-get update
-apt-get install -y nginx git
+set -e
+set -x
 
-apt-get install -y python-software-properties python g++ make curl
-curl -sL https://deb.nodesource.com/setup | sudo bash -
-apt-get update
-apt-get install -y nodejs
+apt-get -qq update
+apt-get -qq install -y python-software-properties python g++ make curl git
+curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-
+sudo apt-get -qq update
+sudo apt-get -qq install -y nodejs mongodb-org
 
 echo "export DATABASE_URL=mongodb://localhost:27017/strato" >> /home/vagrant/.profile
 
-if [ "$1" == "production" ]; then
-	git clone https://www.github.com/welldone/strato2.git /welldone
-else
-	rm /welldone || true
-	if [ -d "/vagrant" ]; then
-		ln -s /vagrant /welldone
-	fi
-fi
-
-if [ ! -d "/welldone" ]; then
-	echo "No /welldone directory found."
-	exit 1
-fi
-
-cd /welldone
-npm install
-
-ln -fs /welldone/scripts/upstart.conf /etc/init/strato.conf
-initctl reload-configuration
-start strato
-
-ln -fs /welldone/scripts/nginx.conf /etc/nginx/sites-enabled/default
-sudo /etc/init.d/nginx restart
+echo "cd /vagrant" >> /home/vagrant/.bashrc
