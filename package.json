@@ -36,5 +36,9 @@
   "devDependencies": {
     "mocha": "^2.0.1",
     "expect.js": "^0.3.1"
+  },
+  "engines": {
+    "node": "0.12.x",
+    "npm": "2.x"
   }
 }

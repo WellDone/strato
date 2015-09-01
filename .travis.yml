@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - '0.12'
+services:
+  - mongodb
+notifications:
+  slack: welldonetech:yF3HybtHHNfxzf0nKhEyG0mC
+sudo: false
