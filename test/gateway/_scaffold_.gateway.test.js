@@ -1,6 +1,7 @@
 var superagent = require('superagent')
 var expect = require('expect.js')
 var _ = require('lodash')
+var artifacts = require('../test-artifacts');
 
 function ConstructReport( version ) {
   var bytes;
@@ -67,7 +68,8 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
     var gsmid = "+5555555";
     before(function(done){
       console.log("Creating monitor...");
-      superagent.post('http://localhost:3000/api/v1/monitors')
+      superagent.post(artifacts.url + '/api/v1/monitors')
+        .set('Authorization', 'Bearer ' + artifacts.token)
         .send({
           name: 'TestMonitor',
           location: [0,0],
@@ -97,7 +99,7 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
             content: report
           }
           payload = payloadFormatter(payload);
-          superagent.post('http://localhost:3000/gateway/' + gatewayName)
+          superagent.post(artifacts.url + '/gateway/' + gatewayName)
             .type(typeof payload == 'string'? 'text':'json')
             .send(payload)
             .end(function(e,res){
@@ -108,7 +110,7 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
         })
 
         it('get the report to ensure it was created', function(done) {
-          superagent.get('http://localhost:3000/api/v1/monitors/' + monitor._id + '/reports')
+          superagent.get(artifacts.url + '/api/v1/monitors/' + monitor._id + '/reports')
             .end(function(e,res){
               expect(e).to.eql(null);
               expect(res.status).to.eql(200);
@@ -121,7 +123,7 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
             })
         })
         it('clean up the report', function(done) {
-          superagent.del('http://localhost:3000/api/v1/monitors/' + monitor._id + '/reports/' + reportID)
+          superagent.del(artifacts.url + '/api/v1/monitors/' + monitor._id + '/reports/' + reportID)
             .end(function(e,res){
               expect(e).to.eql(null);
               expect(res.status).to.eql(200);
@@ -133,7 +135,8 @@ function testGateway( gatewayName, minVersion, payloadFormatter, callback ) {
     
     after(function(done){
       console.log("Deleting monitor...");
-      superagent.del('http://localhost:3000/api/v1/monitors/' + monitor._id)
+      superagent.del(artifacts.url + '/api/v1/monitors/' + monitor._id)
+        .set('Authorization', 'Bearer ' + artifacts.token)
         .end(function(e,res){
           expect(e).to.eql(null);
           expect(res.status).to.eql(200);
