@@ -5,7 +5,7 @@ gatewayScaffold( 'smssync', 2, function(payload) {
   return {
     message: payload.content,
     from: payload.gsmid,
-    send_timestamp: payload.timestamp.getTime()
+    sent_timestamp: payload.timestamp.getTime()
   }
 }, function(payload, res) {
   expect(res.status).to.eql(200);

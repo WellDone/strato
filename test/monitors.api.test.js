@@ -3,17 +3,21 @@ var expect = require('expect.js')
 var _ = require('lodash')
 
 describe('REST api v1.0, monitors resource:', function(){
+  var artifacts = require('./test-artifacts');
+
   var id = null;
   var name = 'TestMonitor'
   var location = [0,0]
 
   it('create new monitor', function(done){
-    superagent.post('http://localhost:3000/api/v1/monitors')
+    superagent.post(artifacts.url + '/api/v1/monitors')
+      .set('Authorization', 'Bearer ' + artifacts.token)
       .send({
       	name: name,
         location: location
       })
       .end(function(e,res){
+        console.log(res.text);
       	expect(e).to.eql(null);
       	expect(res.status).to.eql(201);
         expect(res.body).to.be.an('object');
@@ -24,7 +28,8 @@ describe('REST api v1.0, monitors resource:', function(){
       })
   });
   it('fetch new monitor', function(done){
-  	superagent.get('http://localhost:3000/api/v1/monitors/' + id)
+  	superagent.get(artifacts.url + '/api/v1/monitors/' + id)
+      .set('Authorization', 'Bearer ' + artifacts.token)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -38,7 +43,7 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('get the empty reports list', function(done) {
-  	superagent.get('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+  	superagent.get(artifacts.url + '/api/v1/monitors/' + id + '/reports')
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -48,10 +53,11 @@ describe('REST api v1.0, monitors resource:', function(){
   			done()
   		})
   })
+
   var reports = [];
   _.forEach( ['a','b','c'], function(dummy_value) {
   	it('post a report', function(done){
-	  	superagent.post('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+	  	superagent.post(artifacts.url + '/api/v1/monitors/' + id + '/reports')
 	  		.send({
 	  			value: dummy_value
 	  		})
@@ -70,7 +76,7 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('check that all the reports show up', function(done) {
-  	superagent.get('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+  	superagent.get(artifacts.url + '/api/v1/monitors/' + id + '/reports')
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -87,7 +93,7 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('try getting a report individually', function(done) {
-    superagent.get('http://localhost:3000/api/v1/monitors/' + id + '/reports/' + reports[0])
+    superagent.get(artifacts.url + '/api/v1/monitors/' + id + '/reports/' + reports[0])
       .end(function(e,res){
         expect(e).to.eql(null);
         expect(res.status).to.eql(200);
@@ -100,7 +106,7 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('try to post a report and overwrite monitors_id (should fail)', function(done) {
-    superagent.post('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+    superagent.post(artifacts.url + '/api/v1/monitors/' + id + '/reports')
       .send({
         value: 'BOGUS',
         monitors_id: 'HAXORS'
@@ -114,7 +120,7 @@ describe('REST api v1.0, monitors resource:', function(){
 
   it('delete the reports', function(done) {
   	_.forEach( reports, function( report_id ) {
-	  	superagent.del('http://localhost:3000/api/v1/monitors/' + id + '/reports/'+ report_id)
+	  	superagent.del(artifacts.url + '/api/v1/monitors/' + id + '/reports/'+ report_id)
 	  		.end(function(e,res){
 	  			expect(e).to.eql(null);
 	  			expect(res.status).to.eql(200);
@@ -125,7 +131,7 @@ describe('REST api v1.0, monitors resource:', function(){
   	});
   })
   it('get the empty reports list', function(done) {
-  	superagent.get('http://localhost:3000/api/v1/monitors/' + id + '/reports')
+  	superagent.get(artifacts.url + '/api/v1/monitors/' + id + '/reports')
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -137,7 +143,8 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('delete the monitor', function(done){
-  	superagent.del('http://localhost:3000/api/v1/monitors/' + id)
+  	superagent.del(artifacts.url + '/api/v1/monitors/' + id)
+      .set('Authorization', 'Bearer ' + artifacts.token)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(200);
@@ -146,7 +153,8 @@ describe('REST api v1.0, monitors resource:', function(){
   })
 
   it('fetch the non-existent deleted monitor (should fail)', function(done){
-  	superagent.get('http://localhost:3000/api/v1/monitors/' + id)
+  	superagent.get(artifacts.url + '/api/v1/monitors/' + id)
+      .set('Authorization', 'Bearer ' + artifacts.token)
   		.end(function(e,res){
   			expect(e).to.eql(null);
   			expect(res.status).to.eql(404);

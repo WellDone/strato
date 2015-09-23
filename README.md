@@ -1,18 +1,17 @@
+[![Build Status](https://travis-ci.org/WellDone/strato2.svg)](https://travis-ci.org/WellDone/strato2)
+
+[![Dependencies](https://david-dm.org/WellDone/strato2.svg)](https://david-dm.org/WellDone/strato2)
+
 Strato Data portal
 =======
 A refresh of the original Strato ([welldone/strato](http://github.com/WellDone/Strato)), this time 100x cleaner and 10x better.
 
-# Installation and Usage (Ubuntu)
+# Development Environment
 
-```shell
-curl -sL https://deb.nodesource.com/setup | sudo bash -
-sudo apt-get install -y git nodejs
-sudo npm install -g bower gulp
-
-git clone https://www.github.com/welldone/strato2
-cd strato2
-npm install
-
-nohup npm start &
-npm test
+```console
+$ vagrant up
+$ vagrant ssh
+$ npm install
+$ npm test
+$ npm start
 ```

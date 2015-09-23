@@ -1,21 +1,9 @@
-var BPromise = require('bluebird');
+var strato = require('./lib/strato');
 
+if ( !process.env.DATABASE_URL )
+{
+	console.error("Environment variable DATABASE_URL does not exist.");
+	process.exit(-1);
+}
 
-var api = require('./lib/api/api.v1.0');
-var db = require('./lib/db');
-
-console.log("Connecting to the database...");
-BPromise.join(
-	api.connect(),
-	db.connect()
-).then(function() {
-	var server = require('./lib/server');
-	
-	var port = process.env['PORT'] || 3000;
-	console.log("Starting server on port %d...", port);
-	server.listen( port );
-
-	// if ( !db.db.collection('people').findOne({masterOfTheUniverse: true}) ) {
-	// 	console.error("WARNING: No master of the universe!")
-	// }
-})
+strato.start({ db: process.env.DATABASE_URL, port: process.env.PORT || 3000 });
