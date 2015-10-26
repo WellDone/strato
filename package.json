@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "node ./node_modules/gulp/bin/gulp.js",
-    "start": "node ./node_modules/supervisor/lib/cli-wrapper.js -w index.js,lib index.js",
-    "test": "./node_modules/mocha/bin/mocha --recursive"
+    "prestart": "gulp",
+    "start": "supervisor -w index.js,lib index.js",
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",
