@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/WellDone/strato2.svg)](https://travis-ci.org/WellDone/strato2)
+[![Build Status](https://travis-ci.org/WellDone/strato.svg)](https://travis-ci.org/WellDone/strato)
 
-[![Dependencies](https://david-dm.org/WellDone/strato2.svg)](https://david-dm.org/WellDone/strato2)
+[![Dependencies](https://david-dm.org/WellDone/strato.svg)](https://david-dm.org/WellDone/strato)
 
 Strato Data portal
 =======
