@@ -4,7 +4,7 @@
 
 Strato Data portal
 =======
-A refresh of the original Strato ([welldone/strato](http://github.com/WellDone/Strato)), this time 100x cleaner and 10x better.
+A refresh of the original Strato ([welldone/strato-old](http://github.com/WellDone/strato-old)), this time 100x cleaner and 10x better.
 
 # Development Environment
 
