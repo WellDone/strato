@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/WellDone/strato.svg)](https://travis-ci.org/WellDone/strato)
+[![Code Climate](https://codeclimate.com/github/WellDone/Strato/badges/gpa.svg)](https://codeclimate.com/github/WellDone/Strato)
 
 [![Dependencies](https://david-dm.org/WellDone/strato.svg)](https://david-dm.org/WellDone/strato)
 
