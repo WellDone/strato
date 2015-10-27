@@ -223,12 +223,12 @@ function refresh() {
 		}
 		if ( reports.length == 0 ) // None to add
 			return;
-		$('#last-report-time').text( prettifyTimeDelta(new Date(reports[0].report.timestamp).getTime()*1000, new Date().getTime()) + " ago" );
+		$('#last-report-time').text( prettifyTimeDelta(new Date(reports[0].report.timestamp).getTime(), new Date().getTime()) + " ago" );
 
 		_.forEachRight(reports, function(r) {
 			var item = [];
 			_.fill(item, null,  0, _.keys(keys).length+1);
-			item[0] = new Date(r.report.timestamp).getTime()*1000 + new Date('January 1, 1970 GMT').getTime();
+			item[0] = new Date(r.report.timestamp).getTime() + new Date('January 1, 1970 GMT').getTime();
 			item[0] = new Date(item[0]);
 			item[_.indexOf(_.keys(keys), 'battery')+1] = r.report.batteryVoltage;
 			_.forEach( r.report.bulkAggregates, function(val, key) {

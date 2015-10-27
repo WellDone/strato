@@ -26,7 +26,7 @@ $(function() {
       url: '/api/v1/reports',
       dataSrc: function( json ) {
         for ( var i in json ) {
-          var timestamp = new Date(new Date(json[i]['report']['timestamp']).getTime()*1000 + new Date('January 1, 1970 GMT').getTime());
+          var timestamp = new Date(new Date(json[i]['report']['timestamp']).getTime() + new Date('January 1, 1970 GMT').getTime());
           json[i]['timestamp'] = timestamp.toDateString() + " " + timestamp.getHours() + ":" + timestamp.getMinutes();
           json[i]['monitors_id'] = '<a href="monitor.html?id='+json[i]['monitors_id']+'">' + escapeHtml(json[i]['report']['uuid'])||"" + '</a>';
           json[i]['batteryVoltage'] = escapeHtml(json[i]['report']['batteryVoltage'])||"";
