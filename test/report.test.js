@@ -30,7 +30,7 @@ describe('report parser', function() {
   });
 
   it('throws parsing a bad version', function() {
-    var version = 4;
+    var version = 99;
 
     var bytes = new Buffer(1);
     bytes[0] = version;
@@ -245,6 +245,60 @@ describe('report parser', function() {
 
     it('throws parsing a bad report length', function() {
       var version = 3;
+
+      var bytes = new Buffer(1);
+      bytes[0] = version;
+
+      function parseBadLength() {
+        return parseReport(bytes.toString('base64'));
+      }
+
+      expect(parseBadLength).to.throwError();
+    });
+
+  });
+
+  describe('v4 report', function() {
+
+    it('can parse a v4 report', function() {
+      var version = 4;
+      var batteryVoltage = 5;
+      var uuid = 6;
+      var timestamp = new Date('2015-03-11 15:23:59 UTC');
+
+      var bytes = new Buffer(30);
+      bytes[0] = version;
+      bytes.writeUInt16LE(batteryVoltage, 2);
+      bytes.writeUInt32LE(uuid, 4);
+      bytes.writeUInt32LE(getReportTimestamp(timestamp), 8);
+
+      // Add one ignored
+
+      bytes.writeUInt32LE(0xFFFFFFFF, 12);
+
+      // Add one normal
+
+      var entries = [{
+        timestamp: new Date('2011-03-11 13:14:21 UTC'),
+        value: 1234,
+        streamID: 7
+      }];
+
+      bytes.writeUInt32LE(getReportTimestamp(entries[0].timestamp), 21);
+      bytes.writeUInt32LE(entries[0].value, 25);
+      bytes[29] = entries[0].streamID;
+
+      var report = parseReport(bytes.toString('base64'));
+
+      expect(report.version).to.be(version);
+      expect(report.batteryVoltage).to.be(getBatteryVoltage(batteryVoltage));
+      expect(report.uuid).to.be(uuid);
+      expect(report.timestamp).to.eql(timestamp);
+      expect(report.entries).to.eql(entries);
+    });
+
+    it('throws parsing a bad report length', function() {
+      var version = 4;
 
       var bytes = new Buffer(1);
       bytes[0] = version;
