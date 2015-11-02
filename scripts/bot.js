@@ -72,9 +72,27 @@ function ConstructV3Report( value ) {
   return bytes.toString('base64');
 }
 
+function ConstructV4Report( value ) {
+  var timestamp = Math.floor((new Date().getTime() - new Date('January 1, 2000 GMT').getTime())/1000);
+  var bytes = new Buffer(102);
+  bytes[0] = 4; //version
+  bytes[1] = 0; // reserved
+  bytes.writeUInt16LE( 650, 2 ); // battery voltage
+  bytes.writeUInt32LE( uuid++, 4 ); // uuid
+  bytes.writeUInt32LE( timestamp, 8 ); // timestamp
+  
+  for ( var i = 0; i < 10; ++i ) {
+    bytes.writeUInt32LE( timestamp - 600 + (i * 60), 12 + (i*9) ); // 10 1 minute values
+    bytes.writeUInt32LE( Math.floor(Math.random()*10000), 12 + (i*9) + 4 ); //value
+    bytes[12+(i*9)+8] = 42; //id
+  }
+  console.log( bytes );
+  return bytes.toString('base64');
+}
+
 function SendFakeReport() {
   var url = 'http://' + hostname + '/gateway/http';
-  var data = ConstructV3Report();
+  var data = ConstructV4Report();
 
   console.log("Sending " + JSON.stringify(data) + " to " + url);
   

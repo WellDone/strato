@@ -63,7 +63,7 @@ $.getJSON( "/api/v1/monitors", function(monitors) {
 		}, 0);
 
 		var dailyCount = _.reduce(reports, function(count, current) {
-			var timestamp = new Date(new Date(current['report']['timestamp']).getTime()*1000 + new Date('January 1, 1970 GMT').getTime());
+			var timestamp = new Date(new Date(current['report']['timestamp']).getTime() + new Date('January 1, 1970 GMT').getTime());
 			if ( timestamp > (new Date().setHours(0,0,0,0)) )
 				return count+1;
 			else
